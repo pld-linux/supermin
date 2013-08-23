@@ -1,19 +1,22 @@
 Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
-Version:	4.1.1
+Version:	4.1.3
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
-# Source0-md5:	aabb7d64ece00f363f110ff387ef2916
+# Source0-md5:	95f3981d1c9a20fcdc52b55e9b53c718
 URL:		http://people.redhat.com/~rjones/supermin/
+BuildRequires:	autoconf >= 2.50
+BuildRequires:	automake
 BuildRequires:	e2fsprogs
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	gawk
 BuildRequires:	libcom_err-devel
 BuildRequires:	ocaml >= 3.04-7
 BuildRequires:	ocaml-findlib
+BuildRequires:	pkgconfig
 # not needed in releases (BTW: perldoc is checked, but pod2man is actually used)
 #BuildRequires:	perl-perldoc
 #BuildRequires:	perl-tools-pod
@@ -58,15 +61,20 @@ Ten pakiet zawiera wsparcie uruchomieniowe dla narzędzia supermin.
 %setup -q
 
 %build
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
-	APT_CACHE="apg-cache" \
+	APT_CACHE="apt-cache" \
 	APTITUDE="aptitude" \
 	DPKG="dpkg" \
 	MKE2FS=/sbin/mke2fs \
 	PACMAN="pacman" \
 	RPM="rpm" \
 	YUM="yum" \
-	YUMDOWNLOADER="yumdownloader"
+	YUMDOWNLOADER="yumdownloader" \
+	--disable-network-tests
 
 %{__make}
 
