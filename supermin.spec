@@ -80,9 +80,12 @@ Ten pakiet zawiera wsparcie uruchomieniowe dla narzędzia supermin.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+rm -vf $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/Makefile*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -92,6 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README TODO
 %attr(755,root,root) %{_bindir}/supermin
 %{_mandir}/man8/supermin.8*
+%{_examplesdir}/%{name}-%{version}
 
 %files helper
 %defattr(644,root,root,755)
