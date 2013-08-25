@@ -2,7 +2,7 @@ Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
 Version:	4.1.3
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
@@ -21,7 +21,7 @@ BuildRequires:	pkgconfig
 #BuildRequires:	perl-perldoc
 #BuildRequires:	perl-tools-pod
 BuildRequires:	zlib-devel
-Requires:	%{name}-supermin-helper = %{version}-%{release}
+Requires:	%{name}-helper = %{version}-%{release}
 Suggests:	filelight
 Suggests:	qemu
 Suggests:	yum >= 3.2
