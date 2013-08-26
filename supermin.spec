@@ -2,11 +2,12 @@ Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
 Version:	4.1.3
-Release:	2
+Release:	2.4
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
-# Source0-md5:	95f3981d1c9a20fcdc52b55e9b53c718
+# Source0-md5:	9cdb1cf4baed74267029257a39d488a2
+Patch0:		poldek.patch
 URL:		http://people.redhat.com/~rjones/supermin/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -22,6 +23,7 @@ BuildRequires:	pkgconfig
 #BuildRequires:	perl-tools-pod
 BuildRequires:	zlib-devel
 Requires:	%{name}-helper = %{version}-%{release}
+Requires:	pld-release
 Suggests:	filelight
 Suggests:	qemu
 Suggests:	yum >= 3.2
@@ -46,9 +48,9 @@ uruchomienia takowej.
 Summary:	Runtime support for supermin
 Summary(pl.UTF-8):	Wsparcie uruchomieniowe dla narzędzia supermin
 Group:		Development/Tools
-Requires:	util-linux
-Requires:	cpio
 Requires:	/sbin/mke2fs
+Requires:	cpio
+Requires:	util-linux
 Obsoletes:	febootstrap-supermin-helper < 4
 
 %description helper
@@ -59,6 +61,7 @@ Ten pakiet zawiera wsparcie uruchomieniowe dla narzędzia supermin.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__aclocal} -I m4
@@ -69,10 +72,11 @@ Ten pakiet zawiera wsparcie uruchomieniowe dla narzędzia supermin.
 	APT_CACHE="apt-cache" \
 	APTITUDE="aptitude" \
 	DPKG="dpkg" \
-	MKE2FS=/sbin/mke2fs \
+	MKE2FS="/sbin/mke2fs" \
 	PACMAN="pacman" \
 	RPM="rpm" \
 	YUM="yum" \
+	POLDEK="poldek" \
 	YUMDOWNLOADER="yumdownloader" \
 	--disable-network-tests
 
