@@ -1,12 +1,12 @@
 Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
-Version:	4.1.3
-Release:	2
+Version:	4.1.4
+Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
-# Source0-md5:	95f3981d1c9a20fcdc52b55e9b53c718
+# Source0-md5:	9defec56663740a8eab99c92742ba485
 URL:		http://people.redhat.com/~rjones/supermin/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -20,6 +20,7 @@ BuildRequires:	pkgconfig
 # not needed in releases (BTW: perldoc is checked, but pod2man is actually used)
 #BuildRequires:	perl-perldoc
 #BuildRequires:	perl-tools-pod
+BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
 Requires:	%{name}-helper = %{version}-%{release}
 Suggests:	filelight
