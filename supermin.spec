@@ -1,12 +1,13 @@
+# TODO: ocaml-inifiles (for zypp_rpm)
 Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
-Version:	4.1.4
+Version:	4.1.5
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
-# Source0-md5:	9defec56663740a8eab99c92742ba485
+# Source0-md5:	2b24b7654e7942bed3bea3787bf76859
 URL:		http://people.redhat.com/~rjones/supermin/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
