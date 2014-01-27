@@ -2,12 +2,12 @@
 Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
-Version:	4.1.5
+Version:	4.1.6
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
-# Source0-md5:	2b24b7654e7942bed3bea3787bf76859
+# Source0-md5:	b8581450b92fd42d5fd26961bc21d2bc
 URL:		http://people.redhat.com/~rjones/supermin/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -96,11 +96,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README TODO
 %attr(755,root,root) %{_bindir}/supermin
-%{_mandir}/man8/supermin.8*
+%{_mandir}/man1/supermin.1*
 %{_examplesdir}/%{name}-%{version}
 
 %files helper
 %defattr(644,root,root,755)
 %doc helper/README
 %attr(755,root,root) %{_bindir}/supermin-helper
-%{_mandir}/man8/supermin-helper.8*
+%{_mandir}/man1/supermin-helper.1*
