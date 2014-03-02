@@ -1,13 +1,12 @@
-# TODO: ocaml-inifiles (for zypp_rpm)
 Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
-Version:	4.1.6
+Version:	5.1.1
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
-# Source0-md5:	b8581450b92fd42d5fd26961bc21d2bc
+# Source0-md5:	bef271fa1d7b0dd53a1b3739d715aafb
 URL:		http://people.redhat.com/~rjones/supermin/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -23,12 +22,13 @@ BuildRequires:	pkgconfig
 #BuildRequires:	perl-tools-pod
 BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
-Requires:	%{name}-helper = %{version}-%{release}
 Suggests:	filelight
 Suggests:	qemu
 Suggests:	yum >= 3.2
 Suggests:	yum-utils
 Obsoletes:	febootstrap < 4
+Obsoletes:	febootstrap-supermin-helper < 4
+Obsoletes:	supermin-helper < 5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -43,21 +43,6 @@ zwanych "appliance". Są to małe instalacje (podobne do maszyn
 wirtualnych), zwykle mające ok. 100kB, które można zainstalować w
 całości w locie w ciągu ułamku sekundy, kiedy zachodzi potrzeba
 uruchomienia takowej.
-
-%package helper
-Summary:	Runtime support for supermin
-Summary(pl.UTF-8):	Wsparcie uruchomieniowe dla narzędzia supermin
-Group:		Development/Tools
-Requires:	util-linux
-Requires:	cpio
-Requires:	/sbin/mke2fs
-Obsoletes:	febootstrap-supermin-helper < 4
-
-%description helper
-This package contains the runtime support for supermin.
-
-%description helper -l pl.UTF-8
-Ten pakiet zawiera wsparcie uruchomieniowe dla narzędzia supermin.
 
 %prep
 %setup -q
@@ -98,9 +83,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/supermin
 %{_mandir}/man1/supermin.1*
 %{_examplesdir}/%{name}-%{version}
-
-%files helper
-%defattr(644,root,root,755)
-%doc helper/README
-%attr(755,root,root) %{_bindir}/supermin-helper
-%{_mandir}/man1/supermin-helper.1*
