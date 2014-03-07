@@ -1,12 +1,12 @@
 Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
-Version:	5.1.2
+Version:	5.1.3
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
-# Source0-md5:	3e36fa2eef61263e5866209c69617759
+# Source0-md5:	b5e78d25a201b3c179be4ce73c4e97f0
 URL:		http://people.redhat.com/~rjones/supermin/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
