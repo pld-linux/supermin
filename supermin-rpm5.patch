@@ -1,0 +1,127 @@
+--- supermin-5.1.11/src/librpm-c.c.orig	2014-10-07 12:31:17.000000000 +0200
++++ supermin-5.1.11/src/librpm-c.c	2014-11-04 16:51:56.092792090 +0100
+@@ -34,11 +34,12 @@
+ 
+ #ifdef HAVE_LIBRPM
+ 
+-#include <rpm/header.h>
++#define _RPMLOG_INTERNAL
++#include <rpm/rpm46compat.h>
+ #include <rpm/rpmdb.h>
+-#include <rpm/rpmlib.h>
+ #include <rpm/rpmlog.h>
+ #include <rpm/rpmts.h>
++#include <rpm/rpmversion.h>
+ 
+ static rpmlogCallback old_log_callback;
+ 
+@@ -46,8 +47,8 @@
+ supermin_rpm_log_callback (rpmlogRec rec, rpmlogCallbackData data)
+ {
+   fprintf (stderr, "supermin: rpm: lib: %s%s",
+-           rpmlogLevelPrefix (rpmlogRecPriority (rec)),
+-           rpmlogRecMessage (rec));
++           rpmlogLevelPrefix (rec->pri),
++           rec->message);
+   return 0;
+ }
+ 
+@@ -201,7 +202,7 @@
+ 
+   rv = caml_alloc (count, 0);
+   i = 0;
+-  td = rpmtdNew ();
++  td = malloc (sizeof (*td));
+ 
+   while ((h = rpmdbNextIterator (iter)) != NULL) {
+     HeaderIterator hi;
+@@ -211,7 +212,7 @@
+     v = caml_alloc (5, 0);
+     hi = headerInitIterator (h);
+     while (headerNext (hi, td) == 1) {
+-      switch (rpmtdTag (td)) {
++      switch (td->tag) {
+       case RPMTAG_NAME:
+         Store_field (v, 0, caml_copy_string (rpmtdGetString (td)));
+         stored_vals[0] = true;
+@@ -255,7 +256,7 @@
+     ++i;
+   }
+ 
+-  rpmtdFree (td);
++  free (td);
+   rpmdbFreeIterator (iter);
+ 
+   CAMLreturn (rv);
+@@ -289,7 +290,7 @@
+   h = rpmdbNextIterator (iter);
+   assert (h != NULL);
+ 
+-  td = rpmtdNew ();
++  td = malloc (sizeof (*td));
+   i = headerGet (h, RPMTAG_REQUIRENAME, td, HEADERGET_MINMEM);
+   if (i != 1)
+     caml_failwith ("rpm_pkg_requires: headerGet failed");
+@@ -299,7 +300,7 @@
+     Store_field (rv, i, caml_copy_string (rpmtdNextString (td)));
+ 
+   rpmtdFreeData (td);
+-  rpmtdFree (td);
++  free (td);
+ 
+   rpmdbFreeIterator (iter);
+ 
+@@ -312,15 +313,15 @@
+   rpmdbMatchIterator mi = NULL;
+ 
+   if (what[0] != '/') {
+-    mi = rpmtsInitIterator(ts, RPMDBI_PROVIDENAME, what, 0);
++    mi = rpmtsInitIterator(ts, RPMTAG_PROVIDENAME, what, 0);
+     if (mi != NULL)
+       return mi;
+   }
+-  mi = rpmtsInitIterator(ts, RPMDBI_INSTFILENAMES, what, 0);
++  mi = rpmtsInitIterator(ts, RPMTAG_BASENAMES, what, 0);
+   if (mi != NULL)
+     return mi;
+ 
+-  mi = rpmtsInitIterator(ts, RPMDBI_PROVIDENAME, what, 0);
++  mi = rpmtsInitIterator(ts, RPMTAG_PROVIDENAME, what, 0);
+ 
+   return mi;
+ }
+@@ -350,7 +351,7 @@
+ 
+   rv = caml_alloc (count, 0);
+   i = 0;
+-  td = rpmtdNew ();
++  td = malloc (sizeof (*td));
+ 
+   while ((h = rpmdbNextIterator (iter)) != NULL) {
+     int ret;
+@@ -365,7 +366,7 @@
+     ++i;
+   }
+ 
+-  rpmtdFree (td);
++  free (td);
+   rpmdbFreeIterator (iter);
+ 
+   CAMLreturn (rv);
+@@ -381,7 +382,6 @@
+   int count, i;
+   Header h;
+   rpmfi fi;
+-  const rpmfiFlags fiflags = RPMFI_NOHEADER | RPMFI_FLAGS_QUERY | RPMFI_NOFILEDIGESTS;
+ 
+   data = Librpm_val (rpmv);
+   if (data.ts == NULL)
+@@ -400,7 +400,7 @@
+   h = rpmdbNextIterator (iter);
+   assert (h != NULL);
+ 
+-  fi = rpmfiNew (data.ts, h, RPMTAG_BASENAMES, fiflags);
++  fi = rpmfiNew (data.ts, h, RPMTAG_BASENAMES, 0);
+ 
+   count = rpmfiFC (fi);
+   if (count < 0)

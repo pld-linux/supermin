@@ -1,12 +1,13 @@
 Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
-Version:	5.1.8
+Version:	5.1.11
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
-# Source0-md5:	f10ff5a4c40cce1778c2aea50f682323
+# Source0-md5:	5843cd7016022d4944227c3019c8b225
+Patch0:		%{name}-rpm5.patch
 URL:		http://people.redhat.com/~rjones/supermin/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -20,8 +21,13 @@ BuildRequires:	pkgconfig
 # not needed in releases (BTW: perldoc is checked, but pod2man is actually used)
 #BuildRequires:	perl-perldoc
 #BuildRequires:	perl-tools-pod
+BuildRequires:	rpm-devel >= 5
 BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
+Requires:	cpio
+Requires:	e2fsprogs
+Requires:	rpm
+Requires:	rpm-utils
 Suggests:	filelight
 Suggests:	qemu
 Suggests:	yum >= 3.2
@@ -46,6 +52,7 @@ uruchomienia takowej.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__aclocal} -I m4
@@ -55,10 +62,12 @@ uruchomienia takowej.
 %configure \
 	APT_CACHE="apt-cache" \
 	APTITUDE="aptitude" \
+	CPIO="cpio" \
 	DPKG="dpkg" \
 	MKE2FS=/sbin/mke2fs \
 	PACMAN="pacman" \
 	RPM="rpm" \
+	RPM2CPIO="rpm2cpio" \
 	YUM="yum" \
 	YUMDOWNLOADER="yumdownloader" \
 	--disable-network-tests
