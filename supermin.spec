@@ -1,8 +1,12 @@
+#
+# Conditional build:
+%bcond_with	rpm5	# build with rpm5
+
 Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
 Version:	5.1.17
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
@@ -21,7 +25,7 @@ BuildRequires:	pkgconfig
 # not needed in releases (BTW: perldoc is checked, but pod2man is actually used)
 #BuildRequires:	perl-perldoc
 #BuildRequires:	perl-tools-pod
-BuildRequires:	rpm-devel >= 5
+BuildRequires:	rpm-devel
 BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
 Requires:	cpio
@@ -52,7 +56,7 @@ uruchomienia takowej.
 
 %prep
 %setup -q
-%patch0 -p1
+%{?with_rpm5:%patch0 -p1}
 
 %build
 %{__aclocal} -I m4
