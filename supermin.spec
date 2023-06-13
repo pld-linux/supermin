@@ -5,14 +5,14 @@
 Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
-Version:	5.1.17
-Release:	2
+Version:	5.2.2
+Release:	1
 License:	GPL v2
 Group:		Applications/System
-Source0:	http://libguestfs.org/download/supermin/%{name}-%{version}.tar.gz
-# Source0-md5:	af1e287e5d2b335e2df83a836f1d8ed4
+Source0:	https://download.libguestfs.org/supermin/5.2-stable/%{name}-%{version}.tar.gz
+# Source0-md5:	44cf367b27f645e8db7e8ae3ae5bad02
 Patch0:		%{name}-rpm5.patch
-URL:		http://people.redhat.com/~rjones/supermin/
+URL:		https://people.redhat.com/~rjones/supermin/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	e2fsprogs
@@ -32,10 +32,10 @@ Requires:	cpio
 Requires:	e2fsprogs
 Requires:	rpm
 Requires:	rpm-utils
-Suggests:	filelight
 Suggests:	qemu
-Suggests:	yum >= 3.2
-Suggests:	yum-utils
+Suggests:	dnf
+Suggests:	dnf-plugins-core
+Suggests:	dnf-utils
 Obsoletes:	febootstrap < 4
 Obsoletes:	febootstrap-supermin-helper < 4
 Obsoletes:	supermin-helper < 5
@@ -64,15 +64,15 @@ uruchomienia takowej.
 %{__autoheader}
 %{__automake}
 %configure \
-	APT_CACHE="apt-cache" \
+	APT_GET="apt-get" \
 	APTITUDE="aptitude" \
 	CPIO="cpio" \
+	DNF="dnf" \
 	DPKG="dpkg" \
 	MKE2FS=/sbin/mke2fs \
 	PACMAN="pacman" \
 	RPM="rpm" \
 	RPM2CPIO="rpm2cpio" \
-	YUM="yum" \
 	YUMDOWNLOADER="yumdownloader" \
 	--disable-network-tests
 
