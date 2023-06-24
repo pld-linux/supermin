@@ -23,8 +23,10 @@ BuildRequires:	libcom_err-devel
 BuildRequires:	ocaml >= 3.04-7
 BuildRequires:	ocaml-findlib
 BuildRequires:	pkgconfig
-# not needed in releases (BTW: perldoc is checked, but pod2man is actually used)
-#BuildRequires:	perl-perldoc
+# perldoc checked by configure and required for installation
+# pod2man is actually used but not required as release contains
+# up-to-date man page
+BuildRequires:	perl-perldoc
 #BuildRequires:	perl-tools-pod
 BuildRequires:	rpm-devel
 BuildRequires:	xz-devel
