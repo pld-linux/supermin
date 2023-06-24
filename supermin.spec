@@ -18,6 +18,7 @@ BuildRequires:	automake
 BuildRequires:	e2fsprogs
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	gawk
+BuildRequires:	glibc-static
 BuildRequires:	libcom_err-devel
 BuildRequires:	ocaml >= 3.04-7
 BuildRequires:	ocaml-findlib
