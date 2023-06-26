@@ -12,6 +12,7 @@ Group:		Applications/System
 Source0:	https://download.libguestfs.org/supermin/5.2-stable/%{name}-%{version}.tar.gz
 # Source0-md5:	44cf367b27f645e8db7e8ae3ae5bad02
 Patch0:		%{name}-rpm5.patch
+Patch1:		pld.patch
 URL:		https://people.redhat.com/~rjones/supermin/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -60,6 +61,7 @@ uruchomienia takowej.
 %prep
 %setup -q
 %{?with_rpm5:%patch0 -p1}
+%patch1 -p1
 
 %build
 %{__aclocal} -I m4

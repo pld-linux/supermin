@@ -1,0 +1,28 @@
+--- supermin-5.2.2.orig/src/ph_rpm.ml	2022-03-04 14:13:20.000000000 +0100
++++ supermin-5.2.2/src/ph_rpm.ml	2023-06-24 20:21:37.026413973 +0200
+@@ -64,6 +64,14 @@
+       (stat "/etc/ibm_powerkvm-release").st_kind = S_REG
+     with Unix_error _ -> false
+ 
++let pld_detect () =
++  Config.rpm <> "no" && Config.rpm2cpio <> "no" && rpm_is_available () &&
++    (Config.yumdownloader <> "no" || Config.dnf <> "no") &&
++    (List.mem (Os_release.get_id ()) [ "pld" ] ||
++     try
++       (stat "/etc/pld-release").st_kind = S_REG
++     with Unix_error _ -> false)
++
+ let settings = ref no_settings
+ let rpm_major, rpm_minor, rpm_arch = ref 0, ref 0, ref ""
+ let zypper_major, zypper_minor, zypper_patch = ref 0, ref 0, ref 0
+@@ -543,4 +584,9 @@
+     ph_detect = openmandriva_detect;
+     ph_download_package = PHDownloadAllPackages openmandriva_download_all_packages;
+   } in
+-  register_package_handler "openmandriva" "rpm" openmandriva
++  register_package_handler "openmandriva" "rpm" openmandriva;
++  let pld = {
++    fedora with
++    ph_detect = pld_detect;
++  } in
++  register_package_handler "pld" "rpm" pld
