@@ -6,7 +6,7 @@ Summary:	Tool for creating supermin appliances
 Summary(pl.UTF-8):	Narzędzie do tworzenia minimalistycznych instalacji
 Name:		supermin
 Version:	5.2.2
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/System
 Source0:	https://download.libguestfs.org/supermin/5.2-stable/%{name}-%{version}.tar.gz
@@ -36,10 +36,10 @@ Requires:	cpio
 Requires:	e2fsprogs
 Requires:	rpm
 Requires:	rpm-utils
-Suggests:	qemu
 Suggests:	dnf
 Suggests:	dnf-plugins-core
 Suggests:	dnf-utils
+Suggests:	qemu
 Obsoletes:	febootstrap < 4
 Obsoletes:	febootstrap-supermin-helper < 4
 Obsoletes:	supermin-helper < 5
@@ -60,8 +60,8 @@ uruchomienia takowej.
 
 %prep
 %setup -q
-%{?with_rpm5:%patch0 -p1}
-%patch1 -p1
+%{?with_rpm5:%patch -P 0 -p1}
+%patch -P 1 -p1
 
 %build
 %{__aclocal} -I m4
